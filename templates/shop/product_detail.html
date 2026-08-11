@@ -1,6 +1,54 @@
 {% extends 'base.html' %}
+
 {% block content %}
+<div class="container my-5">
+    <!-- Orqaga qaytish tugmasi -->
+    <a href="{% url 'product_list' %}" class="btn btn-outline-secondary btn-sm mb-4">
+        &larr; Barcha mahsulotlarga qaytish
+    </a>
 
+    <div class="card border-0 shadow-lg overflow-hidden">
+        <div class="row g-0">
+            <!-- Chap tomon: Katta Rasm -->
+            <div class="col-md-6 bg-light d-flex align-items-center justify-content-center p-3">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ product.name }}" style="max-height: 500px; width: 100%; object-fit: cover;">
+                {% else %}
+                    <div class="text-muted py-5 text-center fs-5">Rasm mavjud emas</div>
+                {% endif %}
+            </div>
 
+            <!-- O'ng tomon: Mahsulot ma'lumotlari -->
+            <div class="col-md-6 p-4 p-lg-5 d-flex flex-column justify-content-between">
+                <div>
+                    <h2 class="fw-bold mb-3 display-6">{{ product.name }}</h2>
+                    <h3 class="text-success fw-bold mb-4">{{ product.price }} so'm</h3>
 
+                    <hr class="my-3 text-muted">
+
+                    <!-- Xususiyatlar -->
+                    <div class="mb-4">
+                        <p class="mb-2"><strong>O'lchami:</strong> <span class="badge bg-secondary fs-6">{{ product.size }}</span></p>
+                        <p class="mb-2"><strong>Rangi:</strong> <span class="text-capitalize">{{ product.color }}</span></p>
+                    </div>
+
+                    <!-- Tavsif (Description) -->
+                    {% if product.description %}
+                        <div class="mb-4">
+                            <h5 class="fw-bold">Mahsulot haqida:</h5>
+                            <p class="text-secondary" style="line-height: 1.6;">{{ product.description }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Buyurtma berish tugmasi -->
+                <div class="pt-3">
+                    <a href="#" class="btn btn-primary btn-lg w-100 py-3 fw-bold rounded-3 shadow-sm">
+                        Buyurtma berish
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,8 +1,9 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
+from shop.forms import  OrderProductForm
 from shop.models import Product, Category
 
 
@@ -37,3 +38,17 @@ class ProductDetailView(DetailView):
     template_name = "shop/product_detail.html"
     context_object_name = "product"
     pk_url_kwarg = 'pk'
+
+
+def order_product(request,pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == "Post":
+        form = OrderProductForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.product = product
+            order.save()
+            return redirect(request,"order_success")
+
+def success(request):
+    return render(request,"shop/success.html")
